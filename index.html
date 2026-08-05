@@ -163,12 +163,161 @@
   </section>
 </main>
 
-<div class="modal-bg" id="custModal">...</div>
-<div class="modal-bg" id="visitModal">...</div>
-<div class="modal-bg" id="detailModal">...</div>
-<div class="modal-bg" id="poolModal">...</div>
-<div class="modal-bg" id="userModal">...</div>
-<div class="modal-bg" id="myImportModal">...</div>
+<div class="modal-bg" id="custModal">
+  <div class="modal">
+    <div class="modal-head"><h3 id="custModalTitle">新增客户</h3><button class="x" onclick="closeModal('custModal')">×</button></div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="field"><label>公司名字 *</label><input id="c_name" oninput="checkDupHint()"><div id="c_dupHint" style="font-size:12px;min-height:16px;margin-top:2px"></div></div>
+        <div class="field"><label>负责人（业务员）</label><select id="c_owner"></select></div>
+        <div class="field full"><label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" id="c_public" style="width:auto"> 设为公共客户（团队所有人可见）</label></div>
+        <div class="field"><label>客户阶段</label><select id="c_stage"></select></div>
+        <div class="field"><label>客户属性 (A=等级 / M=意向)</label><select id="c_attr"></select></div>
+        <div class="field"><label>区域</label><select id="c_region"></select></div>
+        <div class="field"><label>是否拜访</label><select id="c_visited"><option>未拜访</option><option>已拜访</option></select></div>
+        <div class="field"><label>客户来源</label><select id="c_source"></select></div>
+        <div class="field"><label>联系人 (A)</label><input id="c_contact"></div>
+        <div class="field"><label>职位</label><select id="c_position"></select></div>
+        <div class="field"><label>电话</label><input id="c_phone"></div>
+        <div class="field"><label>外贸部联系人</label><input id="c_tradeContact"></div>
+        <div class="field"><label>外贸部联系电话</label><input id="c_tradePhone"></div>
+        <div class="field"><label>股东联系人</label><input id="c_shareholder"></div>
+        <div class="field"><label>股东电话</label><input id="c_shareholderPhone"></div>
+        <div class="field"><label>主营产品</label><input id="c_product"></div>
+        <div class="field full"><label>客户地址</label><input id="c_address"></div>
+        <div class="field"><label>平台网址</label><input id="c_platformUrl"></div>
+        <div class="field"><label>独立站网址</label><input id="c_siteUrl"></div>
+        <div class="field"><label>建立日期</label><input id="c_createDate" type="date"></div>
+        <div class="field"><label>下次跟进</label><input id="c_nextFollow" type="date"></div>
+        <div class="field full"><label>同行案例</label><input id="c_peerCase"></div>
+        <div class="field full"><label>备注</label><textarea id="c_note"></textarea></div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn danger sm" id="custDeleteBtn" style="margin-right:auto;display:none" onclick="deleteCustomer()">删除</button>
+      <button class="btn ghost" onclick="closeModal('custModal')">取消</button>
+      <button class="btn" onclick="saveCustomer()">保存</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-bg" id="visitModal">
+  <div class="modal">
+    <div class="modal-head"><h3 id="visitModalTitle">新增拜访</h3><button class="x" onclick="closeModal('visitModal')">×</button></div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="field full"><label>拜访主题 *</label><input id="v_title"></div>
+        <div class="field"><label>关联客户（输入公司名搜索，可留空）</label><input id="v_customer" list="vCustList" placeholder="输入公司名搜索…" autocomplete="off"><datalist id="vCustList"></datalist></div>
+        <div class="field"><label>拜访日期</label><input id="v_date" type="date"></div>
+        <div class="field"><label>拜访人</label><input id="v_visitor"></div>
+        <div class="field"><label>决策人 (A)</label><input id="v_decider"></div>
+        <div class="field"><label>职位</label><select id="v_position"></select></div>
+        <div class="field"><label>电话</label><input id="v_phone"></div>
+        <div class="field"><label>跟进结果</label><select id="v_result"></select></div>
+        <div class="field"><label>下次跟进</label><input id="v_nextFollow" type="date"></div>
+        <div class="field full"><label>公司地址</label><input id="v_address"></div>
+        <div class="field full"><label>拜访情况</label><textarea id="v_situation"></textarea></div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn danger sm" id="visitDeleteBtn" style="margin-right:auto;display:none" onclick="deleteVisit()">删除</button>
+      <button class="btn ghost" onclick="closeModal('visitModal')">取消</button>
+      <button class="btn" onclick="saveVisit()">保存</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-bg" id="detailModal">
+  <div class="modal">
+    <div class="modal-head"><h3 id="detailTitle">客户详情</h3><button class="x" onclick="closeModal('detailModal')">×</button></div>
+    <div class="modal-body" id="detailBody"></div>
+    <div class="modal-foot">
+      <button class="btn ghost" onclick="closeModal('detailModal')">关闭</button>
+      <button class="btn ghost" id="detailPoolBtn" style="display:none"></button>
+      <button class="btn" id="detailEditBtn">编辑客户</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-bg" id="poolModal">
+  <div class="modal">
+    <div class="modal-head"><h3 id="poolModalTitle">编辑公海客户</h3><button class="x" onclick="closeModal('poolModal')">×</button></div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="field"><label>公司名字 *</label><input id="p_name"></div>
+        <div class="field"><label>客户属性</label><select id="p_attr"></select></div>
+        <div class="field"><label>区域</label><select id="p_region"></select></div>
+        <div class="field"><label>来源表</label><input id="p_origin" placeholder="如：赵孟菲潜在客户（公共）"></div>
+        <div class="field"><label>联系人 (A)</label><input id="p_contact"></div>
+        <div class="field"><label>电话</label><input id="p_phone"></div>
+        <div class="field"><label>外贸部联系人</label><input id="p_tradeContact"></div>
+        <div class="field"><label>外贸部电话</label><input id="p_tradePhone"></div>
+        <div class="field"><label>股东联系人</label><input id="p_shareholder"></div>
+        <div class="field"><label>股东电话</label><input id="p_shareholderPhone"></div>
+        <div class="field full"><label>主营产品</label><input id="p_product"></div>
+        <div class="field full"><label>客户地址</label><input id="p_address"></div>
+        <div class="field"><label>平台网址</label><input id="p_platformUrl"></div>
+        <div class="field"><label>独立站网址</label><input id="p_siteUrl"></div>
+        <div class="field"><label>客户来源</label><select id="p_source"></select></div>
+        <div class="field"><label>建立日期</label><input id="p_createDate" type="date"></div>
+      </div>
+      <div style="margin-top:12px;border-top:1px solid var(--line);padding-top:10px">
+        <label style="font-weight:600;font-size:13px;color:var(--muted)">跟进记录</label>
+        <div style="display:flex;gap:6px;margin:8px 0">
+          <input id="p_followInput" placeholder="填写本次跟进内容，回车或点「添加」" style="flex:1;padding:8px;border:1px solid var(--line);border-radius:6px" onkeydown="if(event.key==='Enter'){event.preventDefault();addPoolFollow();}">
+          <button class="btn sm" type="button" onclick="addPoolFollow()">＋ 添加</button>
+        </div>
+        <div id="p_followLog" style="max-height:200px;overflow:auto;font-size:13px"></div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn danger sm" id="poolDeleteBtn" style="margin-right:auto;display:none" onclick="deletePool()">删除</button>
+      <button class="btn ghost" onclick="closeModal('poolModal')">取消</button>
+      <button class="btn ghost" id="poolClaimBtn" style="display:none">🌊 捡入到我的潜在客户</button>
+      <button class="btn" onclick="savePool()">保存</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-bg" id="userModal">
+  <div class="modal" style="max-width:460px">
+    <div class="modal-head"><h3 id="userModalTitle">新增用户</h3><button class="x" onclick="closeModal('userModal')">×</button></div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="field full"><label>姓名（用作客户负责人）*</label><input id="u_name" placeholder="如：张三"></div>
+        <div class="field"><label>登录邮箱 *</label><input id="u_username" type="email" autocomplete="off" placeholder="如 yzh@yg.crm"></div>
+        <div class="field"><label>密码 *（≥6位）</label><input id="u_password" autocomplete="off"></div>
+        <div class="field full"><label>角色</label><select id="u_role"><option value="sales">业务员（仅看自己+公共客户）</option><option value="admin">管理员 / 主管（全部+用户与数据管理）</option></select></div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn danger sm" id="userDeleteBtn" style="margin-right:auto;display:none" onclick="deleteUser()">删除</button>
+      <button class="btn ghost" onclick="closeModal('userModal')">取消</button>
+      <button class="btn" onclick="saveUser()">保存</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-bg" id="myImportModal">
+  <div class="modal" style="max-width:520px">
+    <div class="modal-head"><h3>📥 导入我的客户</h3><button class="x" onclick="closeModal('myImportModal')">×</button></div>
+    <div class="modal-body">
+      <p class="hint">导入的每一家都会<b>自动归到你名下</b>（负责人＝当前登录人），阶段默认「潜在客户」。按公司名去重，重复的会跳过。</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+        <label class="btn">📁 Excel / CSV<input type="file" id="myImportFile" accept=".csv,.xlsx,.xls" style="display:none"></label>
+        <label class="btn">📝 Word（.docx）<input type="file" id="myWordFile" accept=".docx" style="display:none"></label>
+        <label class="btn">📄 TXT 名单<input type="file" id="myTxtFile" accept=".txt" style="display:none"></label>
+        <button class="btn ghost" onclick="downloadTemplate()">⬇️ 下载模板</button>
+      </div>
+      <p class="hint" style="margin-top:12px">• <b>Excel/CSV</b>：表头需含「公司名字」列（其余列名与系统字段一致即自动匹配；「负责人」列会被忽略，一律归你）。<br>
+      • <b>Word</b>：文档内是表格按表格逐行；是「一段一家公司」的名单（含阿里金品格式）则自动抽取公司名、联系人、电话、地址、产品、平台、官网。<br>
+      • <b>TXT</b>：同上，适合探迹 / 阿里金品「一段一家公司」的文本名单。</p>
+    </div>
+    <div class="modal-foot">
+      <button class="btn ghost" onclick="closeModal('myImportModal')">关闭</button>
+    </div>
+  </div>
+</div>
 
 <datalist id="ownerList"></datalist>
 <datalist id="sourceList"></datalist>
