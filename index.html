@@ -35,6 +35,7 @@
 </header>
 
 <main>
+  <!-- ============ DASHBOARD ============ -->
   <section id="view-dash" class="view active">
     <div class="cards" id="statCards"></div>
     <div class="grid2">
@@ -48,6 +49,7 @@
     <div class="panel"><h3>👤 团队业绩（按负责人）</h3><div id="teamChart"></div></div>
   </section>
 
+  <!-- ============ CUSTOMERS ============ -->
   <section id="view-customers" class="view">
     <div class="toolbar">
       <input type="text" id="custSearch" placeholder="🔍 搜索公司 / 联系人 / 电话 / 产品">
@@ -64,6 +66,7 @@
     <div id="custKanban" class="kanban" style="display:none"></div>
   </section>
 
+  <!-- ============ POOL (公海客户) ============ -->
   <section id="view-pool" class="view">
     <div class="toolbar">
       <input type="text" id="poolSearch" placeholder="🔍 搜索公司 / 联系人 / 产品 / 区域">
@@ -75,6 +78,7 @@
     <div id="poolList" class="tbl-wrap"></div>
   </section>
 
+  <!-- ============ VISITS ============ -->
   <section id="view-visits" class="view">
     <div class="toolbar">
       <input type="text" id="visitSearch" placeholder="🔍 搜索拜访主题 / 客户 / 拜访人">
@@ -85,6 +89,7 @@
     <div id="visitList" class="tbl-wrap"></div>
   </section>
 
+  <!-- ============ DATA ============ -->
   <section id="view-data" class="view">
     <div class="panel">
       <h3>🌊 导入公海客户</h3>
@@ -94,6 +99,8 @@
         <label class="btn ghost">📝 导入 Word（.docx）<input type="file" id="poolWordImportFile" accept=".docx" style="display:none"></label>
         <label class="btn ghost">📄 导入 TXT 名单到公海<input type="file" id="poolTxtImportFile" accept=".txt" style="display:none"></label>
       </div>
+      <p class="hint" style="margin-top:6px">📝 <b>Word 导入</b>：若文档里是<b>表格</b>（表头含「公司名字 / 名称」列），按表格逐行导入；若是「一段一家公司」的<b>自由文本</b>，则自动抽取公司名、联系人、电话、地址、主营产品、阿里链接、官网。来源标记为文件名。</p>
+      <p class="hint" style="margin-top:6px">📄 <b>TXT 名单导入</b>：支持探迹 / 阿里金品那种「一段一家公司」的自由文本名单（含 法定代表人 / 注册地址 / 阿里 / 主营产品 等）。自动抽取公司名、联系人、电话、地址、主营产品、阿里链接、官网并按公司名去重入公海，来源标记为文件名。多个名单可分次上传。</p>
     </div>
     <div class="panel">
       <h3>📥 导入客户（Excel / CSV）</h3>
@@ -123,6 +130,7 @@
     </div>
   </section>
 
+  <!-- ============ VISITED CUSTOMERS ============ -->
   <section id="view-visited" class="view">
     <div class="toolbar">
       <input type="text" id="visitedSearch" placeholder="🔍 搜索公司 / 决策人 / 拜访人">
@@ -133,6 +141,7 @@
     <div id="visitedList" class="tbl-wrap"></div>
   </section>
 
+  <!-- ============ WON CUSTOMERS ============ -->
   <section id="view-won" class="view">
     <div class="toolbar">
       <input type="text" id="wonSearch" placeholder="🔍 搜索公司 / 联系人 / 产品">
@@ -143,6 +152,7 @@
     <div id="wonList" class="tbl-wrap"></div>
   </section>
 
+  <!-- ============ 陌拜客户 ============ -->
   <section id="view-mobai" class="view">
     <div class="toolbar">
       <input type="text" id="mobaiSearch" placeholder="🔍 搜索公司 / 联系人 / 产品">
@@ -154,6 +164,7 @@
     <div id="mobaiList" class="tbl-wrap"></div>
   </section>
 
+  <!-- ============ USERS (admin) ============ -->
   <section id="view-users" class="view">
     <div class="toolbar">
       <div class="hint" style="flex:1">每个业务员登录后只能看到「自己新增的客户」+「公共客户」；管理员（主管）可见全部并管理用户与数据。</div>
@@ -163,6 +174,7 @@
   </section>
 </main>
 
+<!-- ===== Customer Modal ===== -->
 <div class="modal-bg" id="custModal">
   <div class="modal">
     <div class="modal-head"><h3 id="custModalTitle">新增客户</h3><button class="x" onclick="closeModal('custModal')">×</button></div>
@@ -201,6 +213,7 @@
   </div>
 </div>
 
+<!-- ===== Visit Modal ===== -->
 <div class="modal-bg" id="visitModal">
   <div class="modal">
     <div class="modal-head"><h3 id="visitModalTitle">新增拜访</h3><button class="x" onclick="closeModal('visitModal')">×</button></div>
@@ -227,6 +240,7 @@
   </div>
 </div>
 
+<!-- ===== Detail Modal ===== -->
 <div class="modal-bg" id="detailModal">
   <div class="modal">
     <div class="modal-head"><h3 id="detailTitle">客户详情</h3><button class="x" onclick="closeModal('detailModal')">×</button></div>
@@ -239,6 +253,7 @@
   </div>
 </div>
 
+<!-- ===== Pool Modal ===== -->
 <div class="modal-bg" id="poolModal">
   <div class="modal">
     <div class="modal-head"><h3 id="poolModalTitle">编辑公海客户</h3><button class="x" onclick="closeModal('poolModal')">×</button></div>
@@ -279,6 +294,7 @@
   </div>
 </div>
 
+<!-- ===== User Modal ===== -->
 <div class="modal-bg" id="userModal">
   <div class="modal" style="max-width:460px">
     <div class="modal-head"><h3 id="userModalTitle">新增用户</h3><button class="x" onclick="closeModal('userModal')">×</button></div>
@@ -298,6 +314,7 @@
   </div>
 </div>
 
+<!-- ===== 我的导入 Modal（业务员自助导入，归自己名下） ===== -->
 <div class="modal-bg" id="myImportModal">
   <div class="modal" style="max-width:520px">
     <div class="modal-head"><h3>📥 导入我的客户</h3><button class="x" onclick="closeModal('myImportModal')">×</button></div>
@@ -323,9 +340,20 @@
 <datalist id="sourceList"></datalist>
 <div class="toast" id="toast"></div>
 
+
+
+
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-<script src="app.js"></script>
+<script src="app-part1.js"></script>
+<script src="app-part2.js"></script>
+<script src="app-part3.js"></script>
+<script src="app-part4.js"></script>
+<script src="app-part5.js"></script>
+<script src="app-part6.js"></script>
+<script src="app-part7.js"></script>
+<script src="app-part8.js"></script>
 
 </body>
 </html>
